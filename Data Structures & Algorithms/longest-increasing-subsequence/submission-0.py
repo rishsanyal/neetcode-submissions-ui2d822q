@@ -1,0 +1,13 @@
+class Solution:
+    def lengthOfLIS(self, nums: List[int]) -> int:
+        cache = [1 for _ in range(len(nums))]
+        res = 1
+
+        for i in range(len(nums)-1, -1, -1):
+            for j in range(i, len(nums)):
+                if nums[i] < nums[j]:
+                    cache[i] = max(cache[i], 1 + cache[j])
+                    res = max(cache[i], res)
+
+
+        return res
