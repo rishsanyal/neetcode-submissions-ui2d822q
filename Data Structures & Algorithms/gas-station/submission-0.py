@@ -1,0 +1,59 @@
+"""
+We can start at the first station where gas[i] >= cost[i]
+we iterate from that index (idx) until idx + len(list)
+on every index we do the math
+gas - cost = 3
+4 - 2 = 2
+4 - 2 = 2
+5 - 4 = 1
+we reach the final point
+
+
+gas = [1,2,3], cost = [2,3,2]
+
+curr_gas = 3
+3 - 2 = 1
+curr_gas = 1 + 1 = 2
+
+curr_gas = 2 - 2 = 0
+0 + 2 = 2
+Fail because 2 - 3 < 0
+"""
+
+        
+        # if sum(cost) > sum(gas):
+        #     return -1
+
+        # curr_gas = 0
+        # res = 0
+
+        # for i in range(len(cost)):
+        #     curr_gas += gas[i] - cost[i]
+
+        #     if curr_gas < 0:
+        #         res = i + 1
+        #         curr_gas = 0
+
+        # return res
+
+
+class Solution:
+    def canCompleteCircuit(self, gas: List[int], cost: List[int]) -> int:
+
+        curr_gas_idx = 0
+        for i in range(len(gas)):
+            if cost[i] < gas[i]:
+                curr_gas_idx = i
+                break
+
+        curr_gas = 0
+
+        for i in range(curr_gas_idx, curr_gas_idx+len(gas)+1):
+            idx = ((i) % (len(gas)))
+
+            curr_gas += gas[idx] - cost[idx]
+
+            if curr_gas < 0:
+                return -1
+
+        return curr_gas_idx
