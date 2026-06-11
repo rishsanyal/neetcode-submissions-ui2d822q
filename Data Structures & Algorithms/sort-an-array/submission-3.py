@@ -1,33 +1,31 @@
 class Solution:
     def sortArray(self, nums: List[int]) -> List[int]:
-        """
-        Merge Sort
-        - Pick a pivot
-        - split the list around it
-        - merge it
+        
+        def mergesort(inp_arr):
+            n = len(inp_arr)
+            if n <= 1:
+                return inp_arr
 
-        can we do it in place?
-        """
 
-        def mergesort(inp):
-            pivot = (0 + len(inp)) // 2
-            lt, gt, eq = [], [], []
+            mid = n // 2
+            left = mergesort(inp_arr[:mid])
+            right =  mergesort(inp_arr[mid:])
 
-            if not inp or len(inp) == 1:
-                return inp
+            res = []
 
-            for num in inp:
-                if num < inp[pivot]:
-                    lt.append(num)
-                elif num == inp[pivot]:
-                    eq.append(num)
+            i,j = 0, 0
+
+            while i < len(left) and j < len(right):
+                if left[i] <= right[j]:
+                    res.append(left[i])
+                    i += 1
                 else:
-                    gt.append(num)
+                    res.append(right[j])
+                    j += 1
+            
+            res += left[i:]
+            res += right[j:]
 
-            return mergesort(lt) + eq + mergesort(gt)
+            return res
 
-        return mergesort(nums)
-
-                
-                
-
+        return(mergesort(nums))
