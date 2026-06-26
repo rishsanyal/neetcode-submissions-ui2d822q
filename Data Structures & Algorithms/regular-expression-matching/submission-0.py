@@ -1,0 +1,49 @@
+"""
+I see an exponential algo here
+
+aa
+.b
+
+. matches the index against it
+* matches 0 or more of the last element
+.* matches everything
+
+doing this in reverse is easier?
+
+l, r = len(s)-1, len(p)-1
+
+deal with first characters
+s_char, p_char
+
+if both alphabets: match and move on, if not match: False
+if p == '.': move on
+if p == '*': check index else we keep matching per remaining element
+
+
+s = "nnn", p = "n*"
+
+s_idx, p_idx
+0, 0
+
+"""
+
+
+class Solution:
+    def isMatch(self, s: str, p: str) -> bool:
+        
+        def match(s_idx, p_idx):
+            if s_idx >= len(s) and p_idx >= len(p):
+                return True
+            if p_idx >= len(p):
+                return False
+
+            match_flag =  s_idx < len(s) and ((s[s_idx] == p[p_idx]) or (p[p_idx] == '.'))
+            
+            if (p_idx + 1 < len(p)) and p[p_idx+1] == "*":
+                match_flag = (match_flag and match(s_idx+1, p_idx)) or match(s_idx, p_idx+2)
+            elif match_flag:
+                match_flag = match(s_idx+1, p_idx+1)
+
+            return match_flag
+
+        return match(0, 0)
